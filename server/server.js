@@ -3,6 +3,7 @@ import morgan from 'morgan'
 import dotenv from 'dotenv'
 import express from 'express'
 import authRoutes from './app/auth/auth.routes.js'
+import userRoutes from './app/user/user.routes.js'
 import { prisma } from './app/prisma.js'
 import { errorHandler, notFound } from './app/middleware/error.middleware.js'
 
@@ -17,6 +18,7 @@ async function main() {
 
 	app.use(express.json())
 	app.use('/api/auth', authRoutes)
+	app.use('/api/user', userRoutes)
 
 	app.use(notFound)
 	app.use(errorHandler)
