@@ -1,9 +1,9 @@
 import asyncHandler from 'express-async-handler'
 import { prisma } from '../prisma.js'
 
-// @desc 		Create new exercise
+// @desc    Create new exercise
 // @route 	POST /api/exercises
-// @access 	Private
+// @access  Private
 export const createNewExercise = asyncHandler(async (req, res) => {
 	const { name, times, iconPath } = req.body
 
@@ -18,16 +18,16 @@ export const createNewExercise = asyncHandler(async (req, res) => {
 	res.json(exercise)
 })
 
-// @desc 		Update exercise
+// @desc    Update exercise
 // @route 	PUT /api/exercises/:id
-// @access 	Private
+// @access  Private
 export const updateExercise = asyncHandler(async (req, res) => {
 	const { name, times, iconPath } = req.body
 
 	try {
 		const exercise = await prisma.exercise.update({
 			where: {
-				id: Number(req.params.id)
+				id: +req.params.id
 			},
 			data: {
 				name,
@@ -43,14 +43,14 @@ export const updateExercise = asyncHandler(async (req, res) => {
 	}
 })
 
-// @desc 		Delete exercise
+// @desc    Delete exercise
 // @route 	DELETE /api/exercises/:id
-// @access 	Private
+// @access  Private
 export const deleteExercise = asyncHandler(async (req, res) => {
 	try {
 		const exercise = await prisma.exercise.delete({
 			where: {
-				id: Number(req.params.id)
+				id: +req.params.id
 			}
 		})
 
@@ -61,15 +61,14 @@ export const deleteExercise = asyncHandler(async (req, res) => {
 	}
 })
 
-// @desc 		Get exercises
-// @route 	Get /api/exercises
-// @access 	Private
+// @desc    Get exercises
+// @route   GET /api/exercises
+// @access  Private
 export const getExercises = asyncHandler(async (req, res) => {
 	const exercises = await prisma.exercise.findMany({
 		orderBy: {
 			createdAt: 'desc'
 		}
 	})
-
 	res.json(exercises)
 })
